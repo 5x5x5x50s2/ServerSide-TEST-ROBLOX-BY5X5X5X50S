@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>serverside</title>
+<style>
+:root{--bg:#ee0000;--head:#b00000;--dark:#550000;--side:#990000}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);font-family:system-ui,Arial,sans-serif;overflow:hidden}
+body{padding-top:env(safe-area-inset-top,0px);display:flex;flex-direction:column}
+header{flex:none;background:var(--head);border:4px solid var(--dark);border-bottom-width:12px;padding:18px 12px 14px;display:flex;flex-direction:column;align-items:center;gap:14px}
+#img8{width:min(38vw,190px);aspect-ratio:1;object-fit:cover;border-radius:4px;display:block}
+#img7{width:min(62vw,320px);height:52px;object-fit:cover;border-radius:4px;display:block}
+main{flex:1;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;display:flex;flex-direction:column;gap:20px;padding:22px 12px calc(22px + env(safe-area-inset-bottom,0px));scrollbar-color:var(--side) var(--bg)}
+main::-webkit-scrollbar{width:14px}
+main::-webkit-scrollbar-track{background:var(--bg)}
+main::-webkit-scrollbar-thumb{background:var(--side);border-radius:7px;border:2px solid var(--bg)}
+.btn{flex:none;display:block;border:8px solid var(--dark);border-radius:6px;overflow:hidden;background:var(--dark);text-decoration:none;-webkit-tap-highlight-color:transparent}
+.btn:active{transform:scale(.98)}
+.lnk{display:block;text-decoration:none}
+.pic{position:relative;height:clamp(150px,48vw,240px);background:#fff}
+.pic img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.layer{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(85,0,0,0) 50%,rgba(85,0,0,.55))}
+.txt{cursor:default;user-select:none;-webkit-user-select:none;padding:12px 10px;text-align:center;color:#fff;font-weight:800;font-size:1.2rem;letter-spacing:.3px;background:var(--dark)}
+</style>
+</head>
+<body>
+<header>
+  <img id="img8" alt="">
+  <img id="img7" alt="">
+</header>
+<main id="grid"></main>
+
+<script>
+/* ====== EDIT HERE ======
+   img = the picture, url = the website the button opens */
+const IMAGE8 = "/5x5x5x50s.gif";   // top square image (empty = placeholder)
+const IMAGE7 = "/logotext.png";   // top banner image
+const BUTTONS = [
+  { text: "natural disaster survival", img: "/images (39).jpeg", url: "https://www.roblox.com/games/113253043235726/NATURAL-DISASTERS" },
+  { text: "SOON", img: "/images (38).jpeg", url: "https://discord.gg/R6ZWWZYw2" },
+  { text: "SOON", img: "/images (37).jpeg", url: "https://discord.gg/R6ZWWZYw2" },
+  { text: "SOON", img: "/images (37).jpeg", url: "https://discord.gg/R6ZWWZYw2" },
+  { text: "SOON", img: "/images (38).jpeg", url: "https://discord.gg/R6ZWWZYw2" },
+  { text: "SOON", img: "/images (38).jpeg", url: "https://discord.gg/R6ZWWZYw2" },
+  { text: "SOON", img: "/images (37).jpeg", url: "https://discord.gg/R6ZWWZYw2" },
+  { text: "SOON", img: "/images (38).jpeg", url: "https://discord.gg/R6ZWWZYw2" },
+  { text: "SOON", img: "/images (38).jpeg", url: "https://discord.gg/R6ZWWZYw2" },
+  { text: "SOON", img: "/images (37).jpeg", url: "https://discord.gg/R6ZWWZYw2" },
+  { text: "SOON", img: "/images (37).jpeg", url: "https://discord.gg/R6ZWWZYw2" },
+  { text: "SOON", img: "/images (37).jpeg", url: "https://discord.gg/R6ZWWZYw2" }
+];
+/* ======================== */
+
+function ph(text,w,h){
+  const svg='<svg xmlns="http://www.w3.org/2000/svg" width="'+w+'" height="'+h+'"><rect width="100%" height="100%" fill="#fff"/><text x="50%" y="50%" fill="#ee0000" font-family="Arial" font-weight="bold" font-size="'+Math.round(Math.min(w,h)/5)+'" text-anchor="middle" dominant-baseline="middle">'+text+'</text></svg>';
+  return 'data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg);
+}
+document.getElementById('img8').src=IMAGE8||ph('image 8',400,400);
+document.getElementById('img7').onerror=function(){this.onerror=null;this.src=ph('image7',640,104)};
+document.getElementById('img7').src=IMAGE7||ph('image7',640,104);
+const grid=document.getElementById('grid');
+BUTTONS.forEach((b,i)=>{
+  const card=document.createElement('div');card.className='btn';
+  const a=document.createElement('a');
+  a.className='lnk';a.href=b.url;a.target='_blank';a.rel='noopener';
+  const pic=document.createElement('div');pic.className='pic';
+  const im=document.createElement('img');im.alt='';
+  im.src=b.img||ph('buttonimage '+(i+1),600,316);
+  const layer=document.createElement('div');layer.className='layer';
+  pic.appendChild(im);pic.appendChild(layer);
+  const t=document.createElement('div');t.className='txt';
+  t.textContent=b.text||('Button '+(i+1));
+  a.appendChild(pic);card.appendChild(a);card.appendChild(t);grid.appendChild(card);
+});
+</script>
+</body>
+</html>
